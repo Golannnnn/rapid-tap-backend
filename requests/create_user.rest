@@ -2,7 +2,7 @@ POST http://localhost:3001/users/signup
 Content-Type: application/json
 
 {
-    "email": "test2@test.com",
-    "nickname": "test2",
+    "email": "Test@test.com",
+    "nickname": "Testy",
     "password": "test2"
 }
