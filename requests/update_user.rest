@@ -1,0 +1,6 @@
+PUT http://localhost:3001/users/update/6474d93b03f1cb3a84ed9ee9
+Content-Type: application/json
+
+{
+    "nickname": "testy"
+}

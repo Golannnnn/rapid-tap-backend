@@ -56,4 +56,23 @@ usersRouter.post("/login", async (request, response) => {
   response.status(200).json({ token: token, user: existingUser });
 });
 
+//TODO: add auth middleware to protect route
+usersRouter.put("/update/:id", async (request, response) => {
+  const { id } = request.params;
+  const { nickname } = request.body;
+
+  //TODO: possibly add option to upload profile picture
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    return response.status(404).json({ error: "user not found" });
+  }
+
+  user.nickname = nickname;
+  await user.save();
+
+  response.status(200).json({ message: "user updated" });
+});
+
 module.exports = usersRouter;
