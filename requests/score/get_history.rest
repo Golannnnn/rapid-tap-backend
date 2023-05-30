@@ -1,0 +1,1 @@
+GET http://localhost:3001/scores/history/6474d93b03f1cb3a84ed9ee9
