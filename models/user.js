@@ -1,9 +1,22 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
+// the lowercase and trim validate that fields are in lowercase and without any unnecessary whitespace
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  nickname: { type: String, required: true, unique: true },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
+  nickname: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
   password: { type: String, required: true },
 });
 
