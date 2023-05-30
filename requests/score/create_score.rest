@@ -1,0 +1,6 @@
+POST http://localhost:3001/scores/add/6474d93b03f1cb3a84ed9ee9
+Content-Type: application/json
+
+{
+    "score": 10
+}
