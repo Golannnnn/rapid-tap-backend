@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 require("dotenv").config();
 
 //TODO: needs to be tested with frontend
@@ -13,6 +14,12 @@ const auth = async (request, response, next) => {
 
   if (!decodedToken.id) {
     return response.status(401).json({ error: "invalid token" });
+  }
+
+  const isExistingUser = await User.findById(decodedToken.id);
+
+  if (!isExistingUser) {
+    return response.status(401).json({ error: "user not found" });
   }
 
   request.userId = decodedToken.id;
