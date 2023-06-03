@@ -2,6 +2,9 @@ const scoresRouter = require("express").Router();
 const Score = require("../models/score");
 const User = require("../models/user");
 
+//TODO: add auth middleware to protect all routes
+//possibly place in app.js to adhere to DRY principle
+
 scoresRouter.post("/add/:id", async (request, response) => {
   const { id } = request.params;
   const { score } = request.body;

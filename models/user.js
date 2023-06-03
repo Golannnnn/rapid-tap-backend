@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
   },
+  picture: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/dpolqsl5b/image/upload/v1685790087/rapid_tap/default_wley11.png",
+  },
   password: { type: String, required: true },
 });
 
