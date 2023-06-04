@@ -35,12 +35,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    validate: {
-      validator: function (v) {
-        return /^. {5,30}$/.test(v);
-      },
-      message: (props) => `Password must be between 5 and 30 characters long`,
-    },
   },
 });
 
