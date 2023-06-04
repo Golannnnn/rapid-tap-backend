@@ -5,15 +5,25 @@ const uniqueValidator = require("mongoose-unique-validator");
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, "Email is required"],
     unique: true,
+    minlength: 3,
+    maxlength: 30,
     lowercase: true,
     trim: true,
+    validate: {
+      validator: function (v) {
+        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid email address`,
+    },
   },
   nickname: {
     type: String,
-    required: true,
+    required: [true, "Nickname is required"],
     unique: true,
+    minlength: 3,
+    maxlength: 30,
     lowercase: true,
     trim: true,
   },
@@ -22,7 +32,16 @@ const userSchema = new mongoose.Schema({
     default:
       "https://res.cloudinary.com/dpolqsl5b/image/upload/v1685790087/rapid_tap/default_wley11.png",
   },
-  password: { type: String, required: true },
+  password: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (v) {
+        return /^. {5,30}$/.test(v);
+      },
+      message: (props) => `Password must be between 5 and 30 characters long`,
+    },
+  },
 });
 
 userSchema.plugin(uniqueValidator);
