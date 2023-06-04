@@ -8,6 +8,12 @@ require("dotenv").config();
 usersRouter.post("/signup", async (request, response) => {
   const { email, nickname, password } = request.body;
 
+  if (password.length < 5 || password.length > 30) {
+    return response.status(400).json({
+      error: "password must be between 5 and 30 characters long",
+    });
+  }
+
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
