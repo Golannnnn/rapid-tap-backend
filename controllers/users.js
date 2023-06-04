@@ -29,10 +29,10 @@ usersRouter.post("/signup", async (request, response) => {
 });
 
 usersRouter.post("/login", async (request, response) => {
-  const { email, nickname, password } = request.body;
+  const { name, password } = request.body;
 
   const existingUser = await User.findOne({
-    $or: [{ email: email }, { nickname: nickname }],
+    $or: [{ email: name }, { nickname: name }],
   });
 
   if (!existingUser) {
