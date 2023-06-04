@@ -1,6 +1,3 @@
-//TODO: implement auth middleware that checks for a valid token
-//TODO: implement auth middleware that checks if user exists and is valid
-
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);

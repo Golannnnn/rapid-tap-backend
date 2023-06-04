@@ -2,6 +2,7 @@ const usersRouter = require("express").Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const upload = require("../utils/cloudinary");
 require("dotenv").config();
 
 usersRouter.post("/signup", async (request, response) => {
@@ -57,22 +58,30 @@ usersRouter.post("/login", async (request, response) => {
 });
 
 //TODO: add auth middleware to protect route
-usersRouter.put("/update/:id", async (request, response) => {
-  const { id } = request.params;
-  const { nickname } = request.body;
+// make sure to send object in form data with key "picture" and key "nickname"
+usersRouter.put(
+  "/update/:id",
+  upload.single("picture"),
+  async (request, response) => {
+    const { id } = request.params;
+    const { nickname } = request.body;
+    const { path } = request.file;
 
-  //TODO: possibly add option to upload profile picture
+    const user = await User.findById(id);
 
-  const user = await User.findById(id);
+    if (!user) {
+      return response.status(404).json({ error: "user not found" });
+    }
 
-  if (!user) {
-    return response.status(404).json({ error: "user not found" });
+    if (path) {
+      user.picture = path;
+    }
+
+    user.nickname = nickname;
+    await user.save();
+
+    response.status(200).json({ message: "user updated" });
   }
-
-  user.nickname = nickname;
-  await user.save();
-
-  response.status(200).json({ message: "user updated" });
-});
+);
 
 module.exports = usersRouter;
