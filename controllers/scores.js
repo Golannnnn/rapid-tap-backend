@@ -1,11 +1,12 @@
 const scoresRouter = require("express").Router();
 const Score = require("../models/score");
 const User = require("../models/user");
+const auth = require("../utils/authentication");
 
 //TODO: add auth middleware to protect all routes
 //possibly place in app.js to adhere to DRY principle
 
-scoresRouter.post("/add/:id", async (request, response) => {
+scoresRouter.post("/add/:id", auth, async (request, response) => {
   const { id } = request.params;
   const { score } = request.body;
 
@@ -25,7 +26,7 @@ scoresRouter.post("/add/:id", async (request, response) => {
   response.status(201).json(savedScore);
 });
 
-scoresRouter.get("/history/:id", async (request, response) => {
+scoresRouter.get("/history/:id", auth, async (request, response) => {
   const { id } = request.params;
 
   const scores = await Score.find({ user: id }); // if user not found, returns empty array
@@ -33,7 +34,7 @@ scoresRouter.get("/history/:id", async (request, response) => {
   response.status(200).json(scores);
 });
 
-scoresRouter.get("/last/:id", async (request, response) => {
+scoresRouter.get("/last/:id", auth, async (request, response) => {
   const { id } = request.params;
 
   const lastScore = await Score.find({ user: id })
@@ -43,7 +44,7 @@ scoresRouter.get("/last/:id", async (request, response) => {
   response.status(200).json(lastScore);
 });
 
-scoresRouter.get("/best/:id", async (request, response) => {
+scoresRouter.get("/best/:id", auth, async (request, response) => {
   const { id } = request.params;
 
   const bestScore = await Score.find({ user: id }).sort({ score: -1 }).limit(1); // if user not found, returns empty array
@@ -51,7 +52,7 @@ scoresRouter.get("/best/:id", async (request, response) => {
   response.status(200).json(bestScore);
 });
 
-scoresRouter.get("/all", async (request, response) => {
+scoresRouter.get("/all", auth, async (request, response) => {
   const scores = await Score.find({});
 
   response.status(200).json(scores);

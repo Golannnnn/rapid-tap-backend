@@ -3,6 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const upload = require("../utils/cloudinary");
+const auth = require("../utils/authentication");
 require("dotenv").config();
 
 usersRouter.post("/signup", async (request, response) => {
@@ -66,6 +67,7 @@ usersRouter.post("/login", async (request, response) => {
 //TODO: add auth middleware to protect route
 // make sure to send object in form data with key "picture" and key "nickname"
 usersRouter.put(
+  auth,
   "/update/:id",
   upload.single("picture"),
   async (request, response) => {
@@ -89,5 +91,17 @@ usersRouter.put(
     response.status(200).json({ message: "user updated" });
   }
 );
+
+usersRouter.get("/me", auth, async (request, response) => {
+  const { userId } = request;
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return response.status(404).json({ error: "user not found" });
+  }
+
+  response.status(200).json({ user: user });
+});
 
 module.exports = usersRouter;
