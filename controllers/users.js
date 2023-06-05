@@ -73,7 +73,6 @@ usersRouter.put(
   async (request, response) => {
     const { id } = request.params;
     const { nickname } = request.body;
-    const { path } = request.file;
 
     const user = await User.findById(id);
 
@@ -81,8 +80,8 @@ usersRouter.put(
       return response.status(404).json({ error: "user not found" });
     }
 
-    if (path) {
-      user.picture = path;
+    if (request.file) {
+      user.picture = request.file.path;
     }
 
     user.nickname = nickname;

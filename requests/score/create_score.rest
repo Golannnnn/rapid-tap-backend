@@ -1,6 +1,6 @@
-POST http://localhost:3001/scores/add/6474d93b03f1cb3a84ed9ee9
+POST http://localhost:3001/scores/add/647d8a90cb43382e921d8514
 Content-Type: application/json
 
 {
-    "score": 10
+    "score": 88
 }
