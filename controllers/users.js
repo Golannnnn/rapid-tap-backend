@@ -67,8 +67,8 @@ usersRouter.post("/login", async (request, response) => {
 //TODO: add auth middleware to protect route
 // make sure to send object in form data with key "picture" and key "nickname"
 usersRouter.put(
-  auth,
   "/update/:id",
+  auth,
   upload.single("picture"),
   async (request, response) => {
     const { id } = request.params;
