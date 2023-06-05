@@ -72,7 +72,6 @@ usersRouter.put(
   upload.single("picture"),
   async (request, response) => {
     const { id } = request.params;
-    const { nickname } = request.body;
 
     const user = await User.findById(id);
 
@@ -84,8 +83,13 @@ usersRouter.put(
       user.picture = request.file.path;
     }
 
-    user.nickname = nickname;
-    await user.save();
+    if (request.body.nickname) {
+      user.nickname = request.body.nickname;
+    }
+
+    if (request.body.nickname || request.file) {
+      await user.save();
+    }
 
     response.status(200).json({ message: "user updated" });
   }
