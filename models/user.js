@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Nickname is required"],
     unique: true,
     minlength: 3,
-    maxlength: 30,
+    maxlength: 13,
     lowercase: true,
     trim: true,
   },
